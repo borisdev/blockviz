@@ -6,14 +6,16 @@ threadsafe: true
 
 handlers:
 - url: /(.*\.(html))
-  static_files: static/HTML/\1
-  upload: static/HTML/(.*\.(html))
+  static_files: static/html/\1
+  upload: static/html/(.*\.(html))
 - url: /css
   static_dir: static/css
 - url: /images
   static_dir: static/images
 - url: /js
   static_dir: static/js
+- url: /json
+  static_dir: static/json
 - url: .*
   script: django_project_settings.wsgi.application
 

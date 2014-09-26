@@ -57,9 +57,16 @@
 
     </style>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/js/rbush.js"></script> <!--javascript RTree-->
 
     <script>
+var TREEDATA;
 function initialize() {
+  $.getJSON( "/json/treeData.json", function( data ) {
+        TREEDATA=data; 
+    });
+
   var mapOptions = {
     center: new google.maps.LatLng(37.8044, -122.2708),
     zoom: 13
@@ -96,11 +103,16 @@ function initialize() {
     if (!place.geometry) {
       return;
     }else{
+        // BORIS BREADCRUMB
         var lat=place.geometry.location.lat();
         var lon=place.geometry.location.lng();
         console.log(lat,lon);
-        var x=lon-.0000001;// lat-.0000001,lon+.0000001,lat+.0000001;
-        console.log(x);
+        var x=lon-.0000001;
+        var X=lon+.0000001;
+        var y=lat-.0000001;
+        var Y=lat+.0000001;
+        block_location=[x,y,X,Y];
+        console.log(block_location);
         // Use Rtree here
         // Use Point in Polygon here
     }
@@ -172,7 +184,14 @@ google.maps.event.addDomListener(window, 'load', initialize);
       <label for="changetype-geocode">Geocodes</label>
     </div>
 -->
-    <b>BLOCKVIZ: Interesting statistics on city blocks of the U.S.A</b>  
+    <b>BLOCKVIZ: Profile neighborhoods down to the block level</b>  
+    <p>Overlays</p>
+    <ul>
+        <li> neighborhood
+        <li> zipcode
+        <li> block group
+        <li> block
+    </ul>
     <div id="map-canvas"></div>
     {{random_number}}
   </body>
