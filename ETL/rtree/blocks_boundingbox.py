@@ -24,7 +24,7 @@ with open("bounding_boxes.json","w") as output:
         y=i.bounding_box.lower
         X=i.bounding_box.right
         Y=i.bounding_box.upper
-        bb_list.append([x,y,X,Y])
+        bb_list.append([x,y,X,Y,{"offset":enum}])
         #break
     json.dump(bb_list,output)
 

@@ -1,12 +1,15 @@
 var rbush = require('./rbush');
 var fs = require('fs');
-
-var file="block_group_bounding_boxes.json";
 var jsonFile = require('json-file-plus');
+
+
+// INPUT: bounding boxes from shapefile
+
+//var file="block_group_bounding_boxes.json";
+var file="block_group_bounding_boxes_w_offset.json";
 var path = require('path'); // in node-core
 var filename = path.join(process.cwd(), file);
 
-console.log("filename", filename);
 
 jsonFile(filename, function (err, file) {
         if (err) { return 
@@ -18,12 +21,18 @@ jsonFile(filename, function (err, file) {
         console.log(typeof file.data);
         console.log(file.data.slice(0,2));
         tree.load(file.data)
+        var rec=[-117.70702999976885, 34.064940999658226, -117.69829200059435, 34.066827000259664];
+        var result = tree.search(rec);
+        var offsets=[];
+        for (var i=0; i < result.length; i++) {
+            offsets.push(result[i][4]);
+            }
+        console.log("Offsets intersecting 1st area:", offsets);
 
         file.format; // extracted formatting data. change at will.
 
-        /* OUTPUT */
+        /* OUTPUT: RTree Data */
         var treeData = tree.toJSON();
-        var fs = require('fs');
         fs.writeFile("treeData.json", treeData, function(err) {
                 if(err){
                             console.log(err);
@@ -32,3 +41,27 @@ jsonFile(filename, function (err, file) {
                     }
         });
 });
+
+
+
+// TEST RTREE OUTPUT: 
+
+var file="treeData.json";
+var path = require('path'); // in node-core
+var filename = path.join(process.cwd(), file);
+
+
+jsonFile(filename, function (err, file) {
+        if (err) { return 
+                        console.log("File didnt open?"); 
+                        console.log(err); 
+                }
+        console.log("Rtree JSON filenam:",filename);
+        // import previously exported data
+        var tree = rbush(9).fromJSON(file.data);
+        var p = tree[0];
+        console.log("First record from tree:", p);
+        var result= tree.search(p);
+        console.log("Result", result);
+});
+
