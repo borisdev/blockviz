@@ -68,8 +68,9 @@ var TREE;
 function initialize() {
   $.ajax({
         url : "/json/treeData.json",
-        dataType : 'html',
-        cache: true,
+        //dataType : 'html',
+        dataType : 'json',
+        cache: true, // uncertain ???
         success : function(binaryString)
         {  
           //var inflate = new Zlib.RawInflate(data);
