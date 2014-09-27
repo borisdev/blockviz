@@ -68,8 +68,8 @@ var TREE;
 function initialize() {
   $.ajax({
         url : "/json/treeData.json",
-        //dataType : 'html',
-        dataType : 'json',
+        dataType : 'html',
+        //dataType : 'json',
         cache: true, // uncertain ???
         success : function(binaryString)
         {  
