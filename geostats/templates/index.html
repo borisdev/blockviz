@@ -59,13 +59,28 @@
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="/js/rbush.js"></script> <!--javascript RTree-->
+    <!--<script src="/js/zlib.min.js"></script> -->
+    <script src="/js/pako_inflate.min.js"></script> 
 
     <script>
-var TREEDATA;
+var TREE;
+
 function initialize() {
-  $.getJSON( "/json/treeData.json", function( data ) {
-        TREEDATA=data; 
-    });
+  $.ajax({
+        url : "/json/treeData.json",
+        dataType : 'html',
+        cache: true,
+        success : function(binaryString)
+        {  
+          //var inflate = new Zlib.RawInflate(data);
+          //var inflated= inflate.decompress();
+          //TREEDATA=$.parseJSON(inflated);
+          //TREEDATA=pako.ungzip(data);
+          var restored = JSON.parse(pako.inflate(binaryString, { to: 'string' }));
+          TREE = rbush(9).fromJSON(restored);
+          console.log("DONE LOADING RTREE");
+        }
+      });
 
   var mapOptions = {
     center: new google.maps.LatLng(37.8044, -122.2708),

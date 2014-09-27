@@ -1,5 +1,3 @@
-
-
 import fiona
 import pysal
 import sys
@@ -20,11 +18,11 @@ with open("bounding_boxes.json","w") as output:
     
     for enum,i in enumerate(shp):
         print enum,"of", N
-        x=i.bounding_box.left
-        y=i.bounding_box.lower
-        X=i.bounding_box.right
-        Y=i.bounding_box.upper
-        bb_list.append([x,y,X,Y,{"offset":enum}])
+        x=round(i.bounding_box.left,4)
+        y=round(i.bounding_box.lower,4)
+        X=round(i.bounding_box.right,4)
+        Y=round(i.bounding_box.upper,4)
+        bb_list.append([x,y,X,Y,{"o":enum}])
         #break
     json.dump(bb_list,output)
 

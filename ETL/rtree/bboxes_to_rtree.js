@@ -1,12 +1,13 @@
 var rbush = require('./rbush');
 var fs = require('fs');
 var jsonFile = require('json-file-plus');
+var pako = require('pako');
 
 
 // INPUT: bounding boxes from shapefile
 
 //var file="block_group_bounding_boxes.json";
-var file="block_group_bounding_boxes_w_offset.json";
+var file="bounding_boxes.json"; // bounding boxes with blockgroup offsets
 var path = require('path'); // in node-core
 var filename = path.join(process.cwd(), file);
 
@@ -34,18 +35,20 @@ jsonFile(filename, function (err, file) {
         /* OUTPUT: RTree Data */
         var file = "treeData.json";
         var treeData = tree.toJSON();
-        var jf = require('jsonfile');
 
-        jf.writeFileSync(file, treeData);
-        /*
-        fs.writeFile(file, treeData, function(err) {
+        //var test = { my: 'super', puper: [456, 567], awesome: 'pako' };
+        var binaryString = pako.deflate(JSON.stringify(treeData), { to: 'string' });
+
+        //var jf = require('jsonfile');
+
+        //jf.writeFileSync(file, treeData);
+        fs.writeFile(file, binaryString, function(err) {
                 if(err){
                             console.log(err);
                 }else{
                             console.log("The file was saved!");
                     }
         });
-        */
 });
 
 
