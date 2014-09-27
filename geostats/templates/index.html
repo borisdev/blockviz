@@ -126,10 +126,20 @@ function initialize() {
         var X=lon+.0000001;
         var y=lat-.0000001;
         var Y=lat+.0000001;
-        block_location=[x,y,X,Y];
-        console.log(block_location);
+        rec=[x,y,X,Y];
+        console.log(rec);
         // Use Rtree here
+        var result = TREE.search(rec);
+        var offsets=[];
+        for (var i=0; i < result.length; i++) {
+            offsets.push(result[i][4]);
+            }
+        console.log("Offsets intersecting 1st area:", offsets);
         // Use Point in Polygon here
+        offset=offsets[0]["o"];
+        window.location.replace("/blockgroup/"+offset)
+        window.location.href= "/blockgroup/"+offset
+
     }
 
     // If the place has a geometry, then present it on a map.
@@ -199,16 +209,10 @@ google.maps.event.addDomListener(window, 'load', initialize);
       <label for="changetype-geocode">Geocodes</label>
     </div>
 -->
-    <b>BLOCKVIZ: Profile neighborhoods down to the block level</b>  
-    <p>Overlays</p>
-    <ul>
-        <li> neighborhood
-        <li> zipcode
-        <li> block group
-        <li> block
-    </ul>
+    <b>Blockviz: Geographic milieus</b>  
+    <p>Views: public schools, neighborhoods, zipcodes, block groups, blocks</p>
     <div id="map-canvas"></div>
-    {{random_number}}
+    Dynamic template test: {{random_number}}
   </body>
 </html>
 
