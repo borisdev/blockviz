@@ -28,4 +28,4 @@ libraries:
 
 skip_files:
 - ^ETL$
-- *.pyc
+- ^(.*/)?\.pyc$
