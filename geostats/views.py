@@ -33,14 +33,7 @@ def home(request):
 def profile(request, blockgroup_offset):
     t = loader.get_template('statistical_profile.html')
     block=getVars(int(blockgroup_offset))
-    block.pop("total_pop")
-    block.pop("sentiment_overall")
-    block.pop("county")
-    block.pop("state")
-    block.pop("mixrace")
-    block.pop("Under_60min")
     block.pop("geoids")
-    block.pop("self_employed")
     block["Average income"]=block["income"]
     block.pop("income")
     block["Percent traveled abroad in last year"]=block["mobility_abroad"]

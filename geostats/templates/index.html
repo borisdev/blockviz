@@ -6,7 +6,8 @@
     <meta charset="utf-8">
     <style>
       html, body, #map-canvas {
-        height: 100%;
+        /*height: 100%;*/
+        height: 350px;
         margin: 0px;
         padding: 0px
       }
@@ -138,8 +139,9 @@ function initialize() {
         console.log("Offsets intersecting 1st area:", offsets);
         // Use Point in Polygon here
         offset=offsets[0]["o"];
-        window.location.replace("/blockgroup/"+offset)
-        window.location.href= "/blockgroup/"+offset
+        //window.location.assign("/blockgroup/"+offset);
+        //window.location.href= "http://www.blockviz.com/blockgroup/"+offset;
+        $( "#result" ).load( "blockgroup/"+offset );
 
     }
 
@@ -210,10 +212,10 @@ google.maps.event.addDomListener(window, 'load', initialize);
       <label for="changetype-geocode">Geocodes</label>
     </div>
 -->
-    <b>Blockviz: Geographic milieus</b>  
-    <p>Views: public schools, neighborhoods, zipcodes, block groups, blocks</p>
+    <b>Blockviz: Interesting statistics on USA neighborgoods down to the city block level </b>  
     <div id="map-canvas"></div>
-    Dynamic template test: {{random_number}}
+    <div id="result"></div>
+    <!--Dynamic template test: {{random_number}}-->
   </body>
 </html>
 
