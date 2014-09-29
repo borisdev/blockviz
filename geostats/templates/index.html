@@ -142,6 +142,9 @@ function initialize() {
         //window.location.assign("/blockgroup/"+offset);
         //window.location.href= "http://www.blockviz.com/blockgroup/"+offset;
         $( "#result" ).load( "blockgroup/"+offset );
+        //history.pushState({foo:"page 2"},"test","blockgroup/"+offset);
+        window.location = "#foo"
+        //console.log("#foo");
 
     }
 

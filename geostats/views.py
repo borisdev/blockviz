@@ -1,4 +1,5 @@
 from django.template import Context, loader
+from django.views.decorators.cache import never_cache
 from django import http
 import json
 import numpy as nu
@@ -21,6 +22,7 @@ def getVars(offset):
     vals = map(inf2none, vals)
     return dict(zip(rec.dtype.names, vals))
 
+@never_cache
 def home(request):
     t = loader.get_template('index.html')
     random_number=nu.random.randint(10)
